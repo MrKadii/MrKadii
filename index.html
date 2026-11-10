@@ -3,7 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="refresh" content="30">
+<link rel="manifest" href='data:application/manifest+json,{"name":"HoN Reborn HWID Bypass","short_name":"HoN Bypass","start_url":".","display":"standalone","background_color":"#0d1117","theme_color":"#0d1117"}'>
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230d1117'/%3E%3Ctext x='32' y='42' font-size='26' font-family='sans-serif' fill='%2358a6ff' text-anchor='middle'%3EHN%3C/text%3E%3C/svg%3E">
+<link rel="sitemap" type="application/xml" href="sitemap.xml">
+<link rel="alternate" type="application/rss+xml" title="HoN Reborn HWID Bypass" href="rss.xml">
+<script>
+(function(){try{var t=localStorage.getItem('honbypass-theme');if(!t){t=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'}document.documentElement.setAttribute('data-theme',t)}catch(e){}})();
+</script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://abacus.jasoncameron.dev; form-action 'self'; base-uri 'self'; frame-ancestors 'self'">
@@ -58,12 +64,19 @@
   :root{
     --bg:#0d1117; --panel:#161b22; --line:#2d333b;
     --txt:#e6edf3; --dim:#9aa7b3; --accent:#58a6ff; --gold:#e3b341;
+    --bar:rgba(13,17,23,.85); --hero:#10161f; --code:#1f2630; --codetxt:#a5d6ff;
   }
+  html[data-theme="light"]{
+    --bg:#ffffff; --panel:#f6f8fa; --line:#d0d7de;
+    --txt:#1f2328; --dim:#59636e; --accent:#0969da; --gold:#9a6700;
+    --bar:rgba(255,255,255,.85); --hero:#eef2f6; --code:#eff2f5; --codetxt:#0550ae;
+  }
+  html{scroll-behavior:smooth}
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:var(--bg);color:var(--txt);font-family:"Segoe UI",system-ui,sans-serif;line-height:1.6}
   .wrap{max-width:960px;margin:0 auto;padding:0 24px}
 
-  header{padding:64px 0 48px;text-align:center;background:linear-gradient(180deg,#10161f 0%,var(--bg) 100%)}
+  header{padding:64px 0 48px;text-align:center;background:linear-gradient(180deg,var(--hero) 0%,var(--bg) 100%)}
   header h1{font-size:2.4rem;font-weight:700;letter-spacing:.5px}
   header h1 span{color:var(--gold)}
   header p{color:var(--dim);max-width:620px;margin:14px auto 0;font-size:1.05rem}
@@ -86,8 +99,8 @@
   .step::before{counter-increment:step;content:counter(step);flex:0 0 32px;height:32px;border-radius:50%;background:var(--accent);color:#0b1b30;font-weight:700;display:flex;align-items:center;justify-content:center}
   .step b{display:block;margin-bottom:4px}
   .step span{color:var(--dim);font-size:.93rem}
-  code{background:#1f2630;border:1px solid var(--line);border-radius:5px;padding:2px 7px;font-size:.88rem;color:#a5d6ff}
-  pre.conf{background:#1f2630;border:1px solid var(--line);border-radius:8px;padding:14px 16px;font-size:.82rem;color:#a5d6ff;overflow-x:auto;white-space:pre;line-height:1.5;margin-top:14px;font-family:Consolas,monospace}
+  code{background:var(--code);border:1px solid var(--line);border-radius:5px;padding:2px 7px;font-size:.88rem;color:var(--codetxt)}
+    pre.conf{background:var(--code);border:1px solid var(--line);border-radius:8px;padding:14px 16px;font-size:.82rem;color:var(--codetxt);overflow-x:auto;white-space:pre;line-height:1.5;margin-top:14px;font-family:Consolas,monospace}
 
   .faq details{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 18px}
   .faq summary{cursor:pointer;font-weight:600}
@@ -101,11 +114,46 @@
   #visitor-count{display:inline-block;margin-top:8px;padding:3px 10px;border:1px solid var(--line);border-radius:999px;background:var(--panel);color:var(--dim);font-size:.8rem}
   #visitor-count b{color:var(--accent);font-weight:600}
   .soon{display:inline-block;margin-left:8px;padding:2px 10px;border:1px solid var(--line);border-radius:999px;background:var(--panel);color:var(--dim);font-size:.72em;font-weight:400;vertical-align:middle}
+
+  .topbar{position:sticky;top:0;z-index:20;background:var(--bar);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .tb-inner{display:flex;align-items:center;justify-content:space-between;height:52px}
+  .brand{color:var(--txt);text-decoration:none;font-weight:700}
+  .brand span{color:var(--gold)}
+  .tb-links{display:flex;align-items:center;gap:16px}
+  .tb-links a{color:var(--dim);text-decoration:none;font-size:.88rem}
+  .tb-links a:hover{color:var(--txt)}
+  #theme-toggle{background:none;border:1px solid var(--line);border-radius:999px;color:var(--dim);padding:4px 12px;font-size:.8rem;cursor:pointer}
+  #theme-toggle:hover{color:var(--txt)}
+  section{scroll-margin-top:64px}
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none;transition:none}}
+
+  .tablist{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .tab{background:var(--panel);border:1px solid var(--line);border-radius:999px;color:var(--dim);padding:7px 16px;font-size:.88rem;cursor:pointer}
+  .tab[aria-selected="true"]{border-color:var(--accent);color:var(--txt)}
+  .tabpanel{display:none;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+  .tabpanel.is-active{display:block}
+  .tabpanel p{color:var(--dim);font-size:.93rem}
 </style>
 </head>
 <body>
 
-<header>
+<nav class="topbar">
+  <div class="wrap tb-inner">
+    <a class="brand" href="#top">HoN <span>Reborn</span> Bypass</a>
+    <div class="tb-links">
+      <a href="#features">Features</a>
+      <a href="#kurulum">Setup</a>
+      <a href="#proxmox">Proxmox</a>
+      <a href="#acd">ACD</a>
+      <a href="#faq">FAQ</a>
+      <button id="theme-toggle" type="button" aria-label="Toggle color theme">Theme</button>
+    </div>
+  </div>
+</nav>
+
+<header id="top">
   <div class="wrap">
     <h1>Heroes of Newerth <span>Reborn</span> HWID Bypass</h1>
     <p>One-click HWID spoofing tool. It refreshes your machine identity so
@@ -118,7 +166,7 @@
   </div>
 </header>
 
-<section id="features" class="wrap">
+<section id="features" class="wrap reveal">
   <details class="fold">
     <summary><h2 style="display:inline">What does it do?</h2></summary>
     <div class="grid" style="margin-top:16px">
@@ -146,7 +194,7 @@
   </details>
 </section>
 
-<section id="kurulum" class="wrap">
+<section id="kurulum" class="wrap reveal">
   <details class="fold">
     <summary><h2 style="display:inline">Setup</h2></summary>
     <div class="steps" style="margin-top:16px">
@@ -170,7 +218,7 @@
   </details>
 </section>
 
-<section id="proxmox" class="wrap">
+<section id="proxmox" class="wrap reveal">
   <details class="fold">
     <summary><h2 style="display:inline">Full bypass with Proxmox</h2></summary>
     <p style="color:var(--dim);margin-top:14px;font-size:.95rem;max-width:760px">
@@ -264,32 +312,77 @@ vga: std</pre>
   </details>
 </section>
 
-<section id="acd" class="wrap">
+<section id="acd" class="wrap reveal">
   <h2>HoN ACD <span class="soon">Soon</span></h2>
   <p style="color:var(--dim)">Uncap the in-game camera zoom in HoN Reborn — zoom out for a wider field of view, zoom in for detail, beyond the default limits. Coming soon.</p>
 </section>
 
-<section id="faq" class="wrap">
+<section id="faq" class="wrap reveal">
   <h2>FAQ</h2>
-  <div class="faq" style="display:grid;gap:10px">
-    <details>
-      <summary>Does it work for multiple accounts?</summary>
-      <p>Yes. Each run generates a new identity, so a second account also appears as an independent player.</p>
-    </details>
-    <details>
-      <summary>Did the values come out wrong?</summary>
-      <p>Run <code>hwid-restore.bat</code> — all values backed up on the first run are restored exactly.</p>
-    </details>
-    <details>
-      <summary>Client still shows the old identity?</summary>
-      <p>Close and reopen the client completely. Since caches are cleared, the new identity is read as soon as the window opens.</p>
-    </details>
+  <div class="tablist" role="tablist">
+    <button class="tab" type="button" role="tab" aria-selected="true" aria-controls="faq-1" id="tab-1">Multiple accounts?</button>
+    <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="faq-2" id="tab-2">Wrong values?</button>
+    <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="faq-3" id="tab-3">Old identity shown?</button>
+  </div>
+  <div class="tabpanel is-active" role="tabpanel" id="faq-1" aria-labelledby="tab-1">
+    <p>Yes. Each run generates a new identity, so a second account also appears as an independent player.</p>
+  </div>
+  <div class="tabpanel" role="tabpanel" id="faq-2" aria-labelledby="tab-2" hidden>
+    <p>Run <code>hwid-restore.bat</code> — all values backed up on the first run are restored exactly.</p>
+  </div>
+  <div class="tabpanel" role="tabpanel" id="faq-3" aria-labelledby="tab-3" hidden>
+    <p>Close and reopen the client completely. Since caches are cleared, the new identity is read as soon as the window opens.</p>
   </div>
 </section>
 
 <footer>
   <div class="wrap">HoN Reborn HWID Bypass 2026 — Heroes of Newerth Reborn HWID spoof utility · Windows 10/11 · PowerShell 5+</div>
 </footer>
+
+<script>
+// Theme toggle
+(function(){
+  var btn = document.getElementById('theme-toggle');
+  btn.addEventListener('click', function(){
+    var cur = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+    var next = cur === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', next);
+    try { localStorage.setItem('honbypass-theme', next); } catch(e){}
+  });
+})();
+
+// Scroll reveal
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    for (var i=0;i<els.length;i++) els[i].classList.add('in');
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+    });
+  }, {threshold:0.1});
+  for (var j=0;j<els.length;j++) io.observe(els[j]);
+})();
+
+// FAQ tabs
+(function(){
+  var tabs = document.querySelectorAll('.tablist .tab');
+  tabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      tabs.forEach(function(t){
+        t.setAttribute('aria-selected','false');
+        var p = document.getElementById(t.getAttribute('aria-controls'));
+        if (p) { p.classList.remove('is-active'); p.hidden = true; }
+      });
+      tab.setAttribute('aria-selected','true');
+      var panel = document.getElementById(tab.getAttribute('aria-controls'));
+      if (panel) { panel.classList.add('is-active'); panel.hidden = false; }
+    });
+  });
+})();
+</script>
 
 <script>
 (function(){
