@@ -73,10 +73,25 @@
   }
   html{scroll-behavior:smooth}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--txt);font-family:"Segoe UI",system-ui,sans-serif;line-height:1.6}
+  /* HoN Reborn style backdrop: deep slate with a warm gold glow from the top */
+  body{
+    background:
+      radial-gradient(ellipse 120% 55% at 50% -8%, rgba(227,179,65,.16) 0%, rgba(227,179,65,.05) 45%, transparent 70%),
+      radial-gradient(ellipse 90% 45% at 50% 105%, rgba(9,13,20,.9) 0%, transparent 65%),
+      linear-gradient(180deg, var(--hero) 0%, var(--bg) 42%, var(--bg) 100%);
+    background-attachment:fixed;
+    color:var(--txt);font-family:"Segoe UI",system-ui,sans-serif;line-height:1.6;
+    min-height:100vh;
+  }
+  html[data-theme="light"] body{
+    background:
+      radial-gradient(ellipse 120% 55% at 50% -8%, rgba(154,103,0,.10) 0%, rgba(154,103,0,.04) 45%, transparent 70%),
+      linear-gradient(180deg, var(--hero) 0%, var(--bg) 42%, var(--bg) 100%);
+    background-attachment:fixed;
+  }
   .wrap{max-width:960px;margin:0 auto;padding:0 24px}
 
-  header{padding:64px 0 48px;text-align:center;background:linear-gradient(180deg,var(--hero) 0%,var(--bg) 100%)}
+  header{padding:64px 0 48px;text-align:center;background:transparent}
   header h1{font-size:2.4rem;font-weight:700;letter-spacing:.5px}
   header h1 span{color:var(--gold)}
   header p{color:var(--dim);max-width:620px;margin:14px auto 0;font-size:1.05rem}
