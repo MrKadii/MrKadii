@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="refresh" content="30">
+<title>HoN Reborn — HWID Bypass</title>
+<style>
+  :root{
+    --bg:#0d1117; --panel:#161b22; --line:#2d333b;
+    --txt:#e6edf3; --dim:#9aa7b3; --accent:#58a6ff; --gold:#e3b341;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:"Segoe UI",system-ui,sans-serif;line-height:1.6}
+  .wrap{max-width:960px;margin:0 auto;padding:0 24px}
+
+  header{padding:64px 0 48px;text-align:center;background:linear-gradient(180deg,#10161f 0%,var(--bg) 100%)}
+  header h1{font-size:2.4rem;font-weight:700;letter-spacing:.5px}
+  header h1 span{color:var(--gold)}
+  header p{color:var(--dim);max-width:620px;margin:14px auto 0;font-size:1.05rem}
+  .btns{margin-top:28px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .btn{display:inline-block;padding:10px 22px;border-radius:8px;text-decoration:none;font-weight:600;font-size:.95rem}
+  .btn-primary{background:var(--accent);color:#0b1b30}
+  .btn-ghost{border:1px solid var(--line);color:var(--txt)}
+  .btn:hover{filter:brightness(1.12)}
+
+  section{padding:48px 0}
+  h2{font-size:1.4rem;margin-bottom:20px;color:var(--gold)}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:20px}
+  .card h3{font-size:1rem;margin-bottom:8px;color:var(--accent)}
+  .card p{color:var(--dim);font-size:.93rem}
+
+  .steps{counter-reset:step;display:grid;gap:14px}
+  .step{display:flex;gap:16px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px}
+  .step::before{counter-increment:step;content:counter(step);flex:0 0 32px;height:32px;border-radius:50%;background:var(--accent);color:#0b1b30;font-weight:700;display:flex;align-items:center;justify-content:center}
+  .step b{display:block;margin-bottom:4px}
+  .step span{color:var(--dim);font-size:.93rem}
+  code{background:#1f2630;border:1px solid var(--line);border-radius:5px;padding:2px 7px;font-size:.88rem;color:#a5d6ff}
+
+  .faq details{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 18px}
+  .faq summary{cursor:pointer;font-weight:600}
+  .faq p{color:var(--dim);margin-top:8px;font-size:.93rem}
+
+  details.fold > summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px}
+  details.fold > summary::-webkit-details-marker{display:none}
+
+  footer{border-top:1px solid var(--line);padding:28px 0;text-align:center;color:var(--dim);font-size:.85rem}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>Heroes of Newerth <span>Reborn</span> HWID Bypass</h1>
+    <p>One-click HWID spoofing tool. It refreshes your machine identity so
+       the HoN Reborn client sees you as a brand-new player.</p>
+    <div class="btns">
+      <a class="btn btn-primary" href="https://discord.gg/PbqAUnEGZ">Join our Discord</a>
+      <a class="btn btn-ghost" href="#kurulum">How does it work?</a>
+    </div>
+  </div>
+</header>
+
+<section id="features" class="wrap">
+  <details class="fold">
+    <summary><h2 style="display:inline">What does it do?</h2></summary>
+    <div class="grid" style="margin-top:16px">
+    <div class="card">
+      <h3>Machine identity</h3>
+      <p>Updates MachineGuid, NT Identifier, ComputerName and InstallDate
+         with fresh unique values.</p>
+    </div>
+    <div class="card">
+      <h3>Hardware traces</h3>
+      <p>Refreshes CPU identity/name, BIOS and SMBIOS registry caches,
+         and changes the network adapter MAC address.</p>
+    </div>
+    <div class="card">
+      <h3>Client state</h3>
+      <p>Clears Juvio caches, install.bin and reconnect.cfg identities so
+         the client reads the new identity right away.</p>
+    </div>
+    <div class="card">
+      <h3>Reversible</h3>
+      <p>All previous values are saved to <code>hwid-backup.json</code> on first run;
+         restore them with <code>hwid-restore.bat</code>.</p>
+    </div>
+  </div>
+  </details>
+</section>
+
+<section id="kurulum" class="wrap">
+  <details class="fold">
+    <summary><h2 style="display:inline">Setup</h2></summary>
+    <div class="steps" style="margin-top:16px">
+    <div class="step">
+      <div><b>Prepare the folder</b>
+      <span>Put <code>hwid-spoof.bat</code> and <code>hwid-restore.bat</code> in one folder.</span></div>
+    </div>
+    <div class="step">
+      <div><b>Double-click</b>
+      <span>Double-click <code>hwid-spoof.bat</code>; you'll see OK/FAILED output for each step.</span></div>
+    </div>
+    <div class="step">
+      <div><b>Restart</b>
+      <span>Reboot the system once so the new computer name is fully applied.</span></div>
+    </div>
+    <div class="step">
+      <div><b>Log in</b>
+      <span>Open the HoN Reborn client and log in with your second account — it's a clean identity now.</span></div>
+    </div>
+  </div>
+  </details>
+</section>
+
+<section id="faq" class="wrap">
+  <h2>FAQ</h2>
+  <div class="faq" style="display:grid;gap:10px">
+    <details>
+      <summary>Does it work for multiple accounts?</summary>
+      <p>Yes. Each run generates a new identity, so a second account also appears as an independent player.</p>
+    </details>
+    <details>
+      <summary>Did the values come out wrong?</summary>
+      <p>Run <code>hwid-restore.bat</code> — all values backed up on the first run are restored exactly.</p>
+    </details>
+    <details>
+      <summary>Client still shows the old identity?</summary>
+      <p>Close and reopen the client completely. Since caches are cleared, the new identity is read as soon as the window opens.</p>
+    </details>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">Heroes of Newerth Reborn — HWID spoof utility · Windows 10/11 · PowerShell 5+</div>
+</footer>
+
+</body>
+</html>
