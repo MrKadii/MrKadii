@@ -82,6 +82,7 @@
   .step b{display:block;margin-bottom:4px}
   .step span{color:var(--dim);font-size:.93rem}
   code{background:#1f2630;border:1px solid var(--line);border-radius:5px;padding:2px 7px;font-size:.88rem;color:#a5d6ff}
+  pre.conf{background:#1f2630;border:1px solid var(--line);border-radius:8px;padding:14px 16px;font-size:.82rem;color:#a5d6ff;overflow-x:auto;white-space:pre;line-height:1.5;margin-top:14px;font-family:Consolas,monospace}
 
   .faq details{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 18px}
   .faq summary{cursor:pointer;font-weight:600}
@@ -192,6 +193,58 @@
       <div><b>Polish inside the VM</b>
       <span>Run <code>hwid-spoof.bat</code> inside the VM if you want an extra layer (fresh MachineGuid,
       cleared client caches). Then launch HoN Reborn and log in — the account is independent.</span></div>
+    </div>
+  </div>
+  <h3 style="color:var(--accent);margin-top:22px;font-size:1rem">Recommended VM configuration</h3>
+  <p style="color:var(--dim);font-size:.9rem;margin-top:6px">Tune the VM directly on the Proxmox host: <code>nano /etc/pve/qemu-server/100.conf</code></p>
+  <pre class="conf">args: -cpu host,-hypervisor,kvm=off
+balloon: 0
+bios: ovmf
+boot: order=sata1;sata0;net0
+cores: 12
+cpu: host
+memory: 6144
+name: Windows10
+net0: e1000=1C:1B:0D:EC:2D:C4,bridge=vmbr0,firewall=1,tag=1
+numa: 0
+ostype: win10
+sata0: local-zfs:vm-100-disk-1,discard=on,size=192G,ssd=1
+smbios1: uuid=f2287762-1a41-4eb8-90d9-bfd59f9caf93
+sockets: 1
+vga: std</pre>
+  <div class="grid" style="margin-top:16px">
+    <div class="card">
+      <h3>-cpu host, -hypervisor, kvm=off</h3>
+      <p>Passes the real CPU model through and hides the KVM hypervisor signature,
+         so the client sees bare-metal hardware instead of a virtual machine.</p>
+    </div>
+    <div class="card">
+      <h3>cpu: host + cores: 12</h3>
+      <p>Full host CPU feature set, all cores on one socket — closest match to a physical gaming PC, best in-game FPS.</p>
+    </div>
+    <div class="card">
+      <h3>balloon: 0</h3>
+      <p>Disables memory ballooning so RAM stays fixed at 6 GB; no stutter from dynamic memory changes.</p>
+    </div>
+    <div class="card">
+      <h3>bios: ovmf</h3>
+      <p>UEFI firmware with a real EFI disk — matches how modern physical machines boot.</p>
+    </div>
+    <div class="card">
+      <h3>net0: e1000=…, bridge=vmbr0</h3>
+      <p>Give every VM its own unique MAC address on the bridge — one of the main fingerprints the client reads.</p>
+    </div>
+    <div class="card">
+      <h3>smbios1: uuid=…</h3>
+      <p>A unique SMBIOS UUID per VM completes the identity: MAC + UUID + CPU string = a separate physical machine.</p>
+    </div>
+    <div class="card">
+      <h3>discard=on, ssd=1</h3>
+      <p>Enables TRIM on the ZFS SSD volume so disks stay fast even after many clones.</p>
+    </div>
+    <div class="card">
+      <h3>Clone workflow</h3>
+      <p>Tune one template VM, then full-clone it per account. Each clone keeps its own MAC/UUID and boots independent.</p>
     </div>
   </div>
   <p style="color:var(--dim);margin-top:14px;font-size:.9rem">
