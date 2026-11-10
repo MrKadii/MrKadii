@@ -16,7 +16,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://abacus.jasoncameron.dev; form-action 'self'; base-uri 'self'; frame-ancestors 'self'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="theme-color" content="#0d1117">
-<title>HoN Reborn HWID Bypass â€” Heroes of Newerth Reborn HWID Tool (2026)</title>
+<title>HoN Reborn HWID Bypass — Heroes of Newerth Reborn HWID Tool (2026)</title>
 <meta name="description" content="HoN Reborn HWID bypass: a one-click HWID spoofing tool for Heroes of Newerth Reborn on Windows 10/11. Resets machine identity, hardware traces and client caches, and is fully reversible.">
 <meta name="keywords" content="HoN Reborn HWID Bypass, Heroes of Newerth Reborn Bypass, HoN Reborn HWID Bypass 2026, HWID spoof, Heroes of Newerth machine ID">
 <meta name="robots" content="index, follow">
@@ -24,11 +24,11 @@
 <link rel="canonical" href="https://mrkadii.github.io/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="HoN Reborn HWID Bypass">
-<meta property="og:title" content="HoN Reborn HWID Bypass â€” Heroes of Newerth Reborn HWID Tool">
+<meta property="og:title" content="HoN Reborn HWID Bypass — Heroes of Newerth Reborn HWID Tool">
 <meta property="og:description" content="One-click HWID spoofing tool for Heroes of Newerth Reborn. Fresh machine identity in seconds, reversible, Windows 10/11.">
 <meta property="og:url" content="https://mrkadii.github.io/">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HoN Reborn HWID Bypass â€” Heroes of Newerth Reborn HWID Tool">
+<meta name="twitter:title" content="HoN Reborn HWID Bypass — Heroes of Newerth Reborn HWID Tool">
 <meta name="twitter:description" content="One-click HWID spoofing tool for Heroes of Newerth Reborn on Windows 10/11.">
 <script type="application/ld+json">
 {
@@ -179,7 +179,7 @@
       <a class="btn btn-primary" href="https://discord.com/channels/701516619200987247/1569795834030194748" rel="noopener noreferrer" referrerpolicy="strict-origin-when-cross-origin">Join our Discord</a>
       <a class="btn btn-ghost" href="#kurulum">How does it work?</a>
     </div>
-    <span id="visitor-count">Visitors: â€”</span>
+    <span id="visitor-count">Visitors: —</span>
   </div>
 </header>
 
@@ -229,7 +229,7 @@
     </div>
     <div class="step">
       <div><b>Log in</b>
-      <span>Open the HoN Reborn client and log in with your second account â€” it's a clean identity now.</span></div>
+      <span>Open the HoN Reborn client and log in with your second account — it's a clean identity now.</span></div>
     </div>
   </div>
   </details>
@@ -240,19 +240,19 @@
     <summary><h2 style="display:inline">Full bypass with Proxmox</h2></summary>
     <p style="color:var(--dim);margin-top:14px;font-size:.95rem;max-width:760px">
       The most reliable method: run each account inside its own lightweight virtual machine.
-      Every VM exposes completely separate hardware to the client â€” its own BIOS/SMBIOS tables,
-      CPU string, MachineGuid and MAC address â€” so each account is seen as a distinct physical machine.
+      Every VM exposes completely separate hardware to the client — its own BIOS/SMBIOS tables,
+      CPU string, MachineGuid and MAC address — so each account is seen as a distinct physical machine.
     </p>
     <div class="steps" style="margin-top:16px">
     <div class="step">
       <div><b>Install Proxmox VE</b>
       <span>Install Proxmox VE on a spare PC or mini-server (ISO from proxmox.com).
-      Manage everything from the web UI at <code>http://&lt;ip&gt;:8006</code> â€” no monitor needed after install.</span></div>
+      Manage everything from the web UI at <code>http://&lt;ip&gt;:8006</code> — no monitor needed after install.</span></div>
     </div>
     <div class="step">
       <div><b>Create one Windows VM per account</b>
       <span>Create a Windows 10/11 VM (virtio drivers, ~2 vCPU, 4 GB RAM is enough for HoN).
-      Each VM generates its own unique machine fingerprint on first boot â€” that alone is already a clean HWID.</span></div>
+      Each VM generates its own unique machine fingerprint on first boot — that alone is already a clean HWID.</span></div>
     </div>
     <div class="step">
       <div><b>Give every VM a distinct MAC</b>
@@ -267,7 +267,7 @@
     <div class="step">
       <div><b>Polish inside the VM</b>
       <span>Run <code>hwid-spoof.bat</code> inside the VM if you want an extra layer (fresh MachineGuid,
-      cleared client caches). Then launch HoN Reborn and log in â€” the account is independent.</span></div>
+      cleared client caches). Then launch HoN Reborn and log in — the account is independent.</span></div>
     </div>
   </div>
   <h3 style="color:var(--accent);margin-top:22px;font-size:1rem">Recommended VM configuration</h3>
@@ -295,7 +295,7 @@ vga: std</pre>
     </div>
     <div class="card">
       <h3>cpu: host + cores: 12</h3>
-      <p>Full host CPU feature set, all cores on one socket â€” closest match to a physical gaming PC, best in-game FPS.</p>
+      <p>Full host CPU feature set, all cores on one socket — closest match to a physical gaming PC, best in-game FPS.</p>
     </div>
     <div class="card">
       <h3>balloon: 0</h3>
@@ -303,14 +303,14 @@ vga: std</pre>
     </div>
     <div class="card">
       <h3>bios: ovmf</h3>
-      <p>UEFI firmware with a real EFI disk â€” matches how modern physical machines boot.</p>
+      <p>UEFI firmware with a real EFI disk — matches how modern physical machines boot.</p>
     </div>
     <div class="card">
-      <h3>net0: e1000=â€¦, bridge=vmbr0</h3>
-      <p>Give every VM its own unique MAC address on the bridge â€” one of the main fingerprints the client reads.</p>
+      <h3>net0: e1000=…, bridge=vmbr0</h3>
+      <p>Give every VM its own unique MAC address on the bridge — one of the main fingerprints the client reads.</p>
     </div>
     <div class="card">
-      <h3>smbios1: uuid=â€¦</h3>
+      <h3>smbios1: uuid=…</h3>
       <p>A unique SMBIOS UUID per VM completes the identity: MAC + UUID + CPU string = a separate physical machine.</p>
     </div>
     <div class="card">
@@ -324,14 +324,14 @@ vga: std</pre>
   </div>
   <p style="color:var(--dim);margin-top:14px;font-size:.9rem">
     Why Proxmox: one physical machine hosts many fully isolated environments, each with its own hardware
-    fingerprint â€” no per-account registry tinkering on the host, and everything is reproducible from the template VM.
+    fingerprint — no per-account registry tinkering on the host, and everything is reproducible from the template VM.
   </p>
   </details>
 </section>
 
 <section id="acd" class="wrap reveal">
   <h2>HoN ACD <span class="soon">Soon</span></h2>
-  <p style="color:var(--dim)">Uncap the in-game camera zoom in HoN Reborn â€” zoom out for a wider field of view, zoom in for detail, beyond the default limits. Coming soon.</p>
+  <p style="color:var(--dim)">Uncap the in-game camera zoom in HoN Reborn — zoom out for a wider field of view, zoom in for detail, beyond the default limits. Coming soon.</p>
 </section>
 
 <section id="faq" class="wrap reveal">
@@ -344,24 +344,24 @@ vga: std</pre>
     <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="faq-5" id="tab-5">Requirements?</button>
   </div>
   <div class="tabpanel is-active" role="tabpanel" id="faq-1" aria-labelledby="tab-1">
-    <p>It writes fresh values into MachineGuid, NT Identifier, ComputerName and InstallDate, refreshes CPU/BIOS registry caches, sets a new MAC address, and clears the HoN Reborn client caches â€” so the next launch sees a completely new machine.</p>
+    <p>It writes fresh values into MachineGuid, NT Identifier, ComputerName and InstallDate, refreshes CPU/BIOS registry caches, sets a new MAC address, and clears the HoN Reborn client caches — so the next launch sees a completely new machine.</p>
   </div>
   <div class="tabpanel" role="tabpanel" id="faq-2" aria-labelledby="tab-2" hidden>
     <p>Yes. Each run generates a new identity, so a second account also appears as an independent player on the same machine.</p>
   </div>
   <div class="tabpanel" role="tabpanel" id="faq-3" aria-labelledby="tab-3" hidden>
-    <p>No reboot needed. Just close and reopen the HoN Reborn client â€” caches are cleared, so the new identity is read as soon as the window opens.</p>
+    <p>No reboot needed. Just close and reopen the HoN Reborn client — caches are cleared, so the new identity is read as soon as the window opens.</p>
   </div>
   <div class="tabpanel" role="tabpanel" id="faq-4" aria-labelledby="tab-4" hidden>
     <p>Yes. Every original value is saved to <code>hwid-backup.json</code> on the first run. Run <code>hwid-restore.bat</code> to restore them exactly.</p>
   </div>
   <div class="tabpanel" role="tabpanel" id="faq-5" aria-labelledby="tab-5" hidden>
-    <p>Windows 10 or 11 with PowerShell 5+ (already included in Windows). No installer, no dependencies â€” double-click the .bat and it runs.</p>
+    <p>Windows 10 or 11 with PowerShell 5+ (already included in Windows). No installer, no dependencies — double-click the .bat and it runs.</p>
   </div>
 </section>
 
 <footer>
-  <div class="wrap">HoN Reborn HWID Bypass 2026 â€” Heroes of Newerth Reborn HWID spoof utility Â· Windows 10/11 Â· PowerShell 5+</div>
+  <div class="wrap">HoN Reborn HWID Bypass 2026 — Heroes of Newerth Reborn HWID spoof utility Â· Windows 10/11 Â· PowerShell 5+</div>
 </footer>
 
 <script>
