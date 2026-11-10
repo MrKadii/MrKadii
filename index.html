@@ -320,18 +320,26 @@ vga: std</pre>
 <section id="faq" class="wrap reveal">
   <h2>FAQ</h2>
   <div class="tablist" role="tablist">
-    <button class="tab" type="button" role="tab" aria-selected="true" aria-controls="faq-1" id="tab-1">Multiple accounts?</button>
-    <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="faq-2" id="tab-2">Wrong values?</button>
-    <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="faq-3" id="tab-3">Old identity shown?</button>
+    <button class="tab" type="button" role="tab" aria-selected="true" aria-controls="faq-1" id="tab-1">What does it actually change?</button>
+    <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="faq-2" id="tab-2">Multiple accounts?</button>
+    <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="faq-3" id="tab-3">Need to restart the PC?</button>
+    <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="faq-4" id="tab-4">Reversible?</button>
+    <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="faq-5" id="tab-5">Requirements?</button>
   </div>
   <div class="tabpanel is-active" role="tabpanel" id="faq-1" aria-labelledby="tab-1">
-    <p>Yes. Each run generates a new identity, so a second account also appears as an independent player.</p>
+    <p>It writes fresh values into MachineGuid, NT Identifier, ComputerName and InstallDate, refreshes CPU/BIOS registry caches, sets a new MAC address, and clears the HoN Reborn client caches — so the next launch sees a completely new machine.</p>
   </div>
   <div class="tabpanel" role="tabpanel" id="faq-2" aria-labelledby="tab-2" hidden>
-    <p>Run <code>hwid-restore.bat</code> — all values backed up on the first run are restored exactly.</p>
+    <p>Yes. Each run generates a new identity, so a second account also appears as an independent player on the same machine.</p>
   </div>
   <div class="tabpanel" role="tabpanel" id="faq-3" aria-labelledby="tab-3" hidden>
-    <p>Close and reopen the client completely. Since caches are cleared, the new identity is read as soon as the window opens.</p>
+    <p>No reboot needed. Just close and reopen the HoN Reborn client — caches are cleared, so the new identity is read as soon as the window opens.</p>
+  </div>
+  <div class="tabpanel" role="tabpanel" id="faq-4" aria-labelledby="tab-4" hidden>
+    <p>Yes. Every original value is saved to <code>hwid-backup.json</code> on the first run. Run <code>hwid-restore.bat</code> to restore them exactly.</p>
+  </div>
+  <div class="tabpanel" role="tabpanel" id="faq-5" aria-labelledby="tab-5" hidden>
+    <p>Windows 10 or 11 with PowerShell 5+ (already included in Windows). No installer, no dependencies — double-click the .bat and it runs.</p>
   </div>
 </section>
 
