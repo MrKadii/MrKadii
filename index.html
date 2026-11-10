@@ -6,7 +6,7 @@
 <meta http-equiv="refresh" content="30">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; base-uri 'self'; frame-ancestors 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://abacus.jasoncameron.dev; form-action 'self'; base-uri 'self'; frame-ancestors 'self'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="theme-color" content="#0d1117">
 <title>HoN Reborn HWID Bypass — Heroes of Newerth Reborn HWID Tool (2026)</title>
@@ -97,6 +97,9 @@
   details.fold > summary::-webkit-details-marker{display:none}
 
   footer{border-top:1px solid var(--line);padding:28px 0;text-align:center;color:var(--dim);font-size:.85rem}
+
+  #visitor-count{display:inline-block;margin-top:8px;padding:3px 10px;border:1px solid var(--line);border-radius:999px;background:var(--panel);color:var(--dim);font-size:.8rem}
+  #visitor-count b{color:var(--accent);font-weight:600}
 </style>
 </head>
 <body>
@@ -107,9 +110,10 @@
     <p>One-click HWID spoofing tool. It refreshes your machine identity so
        the HoN Reborn client sees you as a brand-new player.</p>
     <div class="btns">
-      <a class="btn btn-primary" href="https://discord.gg/PbqAUnEGZ" rel="noopener noreferrer" referrerpolicy="strict-origin-when-cross-origin">Join our Discord</a>
+      <a class="btn btn-primary" href="https://discord.com/channels/701516619200987247/1569795834030194748" rel="noopener noreferrer" referrerpolicy="strict-origin-when-cross-origin">Join our Discord</a>
       <a class="btn btn-ghost" href="#kurulum">How does it work?</a>
     </div>
+    <span id="visitor-count">Visitors: —</span>
   </div>
 </header>
 
@@ -280,6 +284,16 @@ vga: std</pre>
 <footer>
   <div class="wrap">HoN Reborn HWID Bypass 2026 — Heroes of Newerth Reborn HWID spoof utility · Windows 10/11 · PowerShell 5+</div>
 </footer>
+
+<script>
+(function(){
+  var el = document.getElementById('visitor-count');
+  fetch('https://abacus.jasoncameron.dev/hit/mrkadii/honreborn-bypass')
+    .then(function(r){ return r.json(); })
+    .then(function(d){ el.innerHTML = 'Visitors: <b>' + d.value + '</b>'; })
+    .catch(function(){});
+})();
+</script>
 
 </body>
 </html>
