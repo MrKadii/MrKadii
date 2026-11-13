@@ -51,12 +51,12 @@
     {
       "@type": "Question",
       "name": "How do I set it up?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Put hwid-spoof.bat and hwid-restore.bat in one folder, double-click hwid-spoof.bat, reboot once, then log in to the HoN Reborn client." }
+      "acceptedAnswer": { "@type": "Answer", "text": "Put honbypass.ps1 and honbypass.ps1 restore in one folder, run pwsh -NoProfile -File honbypass.ps1, reboot once, then log in to the HoN Reborn client." }
     },
     {
       "@type": "Question",
       "name": "Can I undo the changes?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Original values are saved to hwid-backup.json on the first run and hwid-restore.bat restores them exactly." }
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Original values are saved to hwid-backup.json on the first run and honbypass.ps1 restore restores them exactly." }
     }
   ]
 }
@@ -141,6 +141,8 @@
   .tb-links a:hover{color:var(--txt)}
   #theme-toggle{background:none;border:1px solid var(--line);border-radius:999px;color:var(--dim);padding:4px 12px;font-size:.8rem;cursor:pointer}
   #theme-toggle:hover{color:var(--txt)}
+  #lang-toggle{background:none;border:1px solid var(--line);border-radius:999px;color:var(--dim);padding:4px 12px;font-size:.8rem;cursor:pointer;min-width:52px}
+  #lang-toggle:hover{color:var(--txt)}
   section{scroll-margin-top:64px}
   .reveal{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
   .reveal.in{opacity:1;transform:none}
@@ -165,6 +167,7 @@
       <a href="#proxmox">Proxmox</a>
       <a href="#acd">ACD</a>
       <a href="#faq">FAQ</a>
+      <button id="lang-toggle" type="button" aria-label="Switch language">ไทย</button>
       <button id="theme-toggle" type="button" aria-label="Toggle color theme">Theme</button>
     </div>
   </div>
@@ -205,7 +208,7 @@
     <div class="card">
       <h3>Reversible</h3>
       <p>All previous values are saved to <code>hwid-backup.json</code> on first run;
-         restore them with <code>hwid-restore.bat</code>.</p>
+         restore them with <code>honbypass.ps1 restore</code>.</p>
     </div>
   </div>
   </details>
@@ -217,11 +220,11 @@
     <div class="steps" style="margin-top:16px">
     <div class="step">
       <div><b>Prepare the folder</b>
-      <span>Put <code>hwid-spoof.bat</code> and <code>hwid-restore.bat</code> in one folder.</span></div>
+      <span>Put <code>honbypass.ps1</code> and <code>honbypass.ps1 restore</code> in one folder.</span></div>
     </div>
     <div class="step">
       <div><b>Double-click</b>
-      <span>Double-click <code>hwid-spoof.bat</code>; you'll see OK/FAILED output for each step.</span></div>
+      <span>Run <code>pwsh -NoProfile -File honbypass.ps1</code> (self-elevating); you'll see OK/FAILED output for each step.</span></div>
     </div>
     <div class="step">
       <div><b>Restart</b>
@@ -266,7 +269,7 @@
     </div>
     <div class="step">
       <div><b>Polish inside the VM</b>
-      <span>Run <code>hwid-spoof.bat</code> inside the VM if you want an extra layer (fresh MachineGuid,
+      <span>Run <code>honbypass.ps1</code> inside the VM if you want an extra layer (fresh MachineGuid,
       cleared client caches). Then launch HoN Reborn and log in — the account is independent.</span></div>
     </div>
   </div>
@@ -353,10 +356,10 @@ vga: std</pre>
     <p>No reboot needed. Just close and reopen the HoN Reborn client — caches are cleared, so the new identity is read as soon as the window opens.</p>
   </div>
   <div class="tabpanel" role="tabpanel" id="faq-4" aria-labelledby="tab-4" hidden>
-    <p>Yes. Every original value is saved to <code>hwid-backup.json</code> on the first run. Run <code>hwid-restore.bat</code> to restore them exactly.</p>
+    <p>Yes. Every original value is saved to <code>hwid-backup.json</code> on the first run. Run <code>honbypass.ps1 restore</code> to restore them exactly.</p>
   </div>
   <div class="tabpanel" role="tabpanel" id="faq-5" aria-labelledby="tab-5" hidden>
-    <p>Windows 10 or 11 with PowerShell 7+ (<code>pwsh</code>), or Linux with pwsh. Windows PowerShell 5.1 works too. No installer, no dependencies — run <code>pwsh -NoProfile -File hwid-spoof.ps1</code>.</p>
+    <p>Windows 10 or 11 with PowerShell 7+ (<code>pwsh</code>), or Linux with pwsh. Windows PowerShell 5.1 works too. No installer, no dependencies — run <code>pwsh -NoProfile -File honbypass.ps1</code>.</p>
   </div>
 </section>
 
@@ -365,6 +368,104 @@ vga: std</pre>
 </footer>
 
 <script>
+// Language toggle: English / Thai
+(function(){
+  var TH = {
+    'One-click HWID spoofing tool. It refreshes your machine identity so the HoN Reborn client sees you as a brand-new player.': 'เครื่องมือเปลี่ยน HWID ในคลิกเดียว รีเฟรชข้อมูลประจำเครื่องของคุณเพื่อให้ไคลเอนต์ HoN Reborn มองว่าคุณเป็นผู้เล่นคนใหม่',
+    'Join our Discord': 'เข้าร่วม Discord ของเรา',
+    'How does it work?': 'ทำงานอย่างไร?',
+    'Features': 'คุณสมบัติ',
+    'Setup': 'การติดตั้ง',
+    'FAQ': 'คำถามที่พบบ่อย',
+    'Theme': 'ธีม',
+    'What does it do?': 'เครื่องมือนี้ทำอะไรได้บ้าง?',
+    'Machine identity': 'ข้อมูลประจำเครื่อง',
+    'Updates MachineGuid, NT Identifier, ComputerName and InstallDate with fresh unique values.': 'อัปเดต MachineGuid, NT Identifier, ComputerName และ InstallDate ด้วยค่าใหม่ที่ไม่ซ้ำใคร',
+    'Hardware traces': 'ร่องรอยของฮาร์ดแวร์',
+    'Refreshes CPU identity/name, BIOS and SMBIOS registry caches, and changes the network adapter MAC address.': 'รีเฟรชชื่อและข้อมูลของ CPU รวมถึงแคชรีจิสตรีของ BIOS และ SMBIOS พร้อมเปลี่ยน MAC address ของการ์ดเครือข่าย',
+    'Client state': 'สถานะของไคลเอนต์',
+    'Clears Juvio caches, install.bin and reconnect.cfg identities so the client reads the new identity right away.': 'ล้างแคชของ Juvio รวมทั้งข้อมูลใน install.bin และ reconnect.cfg เพื่อให้ไคลเอนต์อ่านข้อมูลประจำเครื่องใหม่ทันที',
+    'Reversible': 'ย้อนกลับได้',
+    'All previous values are saved to hwid-backup.json on first run; restore them with honbypass.ps1 restore.': 'ค่าเดิมทั้งหมดถูกบันทึกไว้ใน hwid-backup.json ตั้งแต่การรันครั้งแรก คืนค่าได้ด้วย honbypass.ps1 restore',
+    'Prepare the folder': 'เตรียมโฟลเดอร์',
+    'Put honbypass.ps1 and honbypass.ps1 restore in one folder.': 'วาง honbypass.ps1 และ honbypass.ps1 restore ไว้ในโฟลเดอร์เดียวกัน',
+    'Double-click': 'ดับเบิลคลิก',
+    'Run pwsh -NoProfile -File honbypass.ps1 (self-elevating); you\'ll see OK/FAILED output for each step.': 'รัน pwsh -NoProfile -File honbypass.ps1 (ยกระดับสิทธิ์อัตโนมัติ) คุณจะเห็นผล OK/FAILED ในแต่ละขั้น',
+    'Restart': 'รีสตาร์ต',
+    'Reboot the system once so the new computer name is fully applied.': 'รีสตาร์ตเครื่องหนึ่งครั้งเพื่อให้ชื่อเครื่องใหม่มีผลอย่างสมบูรณ์',
+    'Log in': 'เข้าสู่ระบบ',
+    'Open the HoN Reborn client and log in with your second account — it\'s a clean identity now.': 'เปิดไคลเอนต์ HoN Reborn แล้วเข้าสู่ระบบด้วยบัญชีที่สอง — ตอนนี้เป็นข้อมูลประจำเครื่องที่สะอาดแล้ว',
+    'Full bypass with Proxmox': 'Bypass อย่างสมบูรณ์ด้วย Proxmox',
+    'The most reliable method: run each account inside its own lightweight virtual machine. Every VM exposes completely separate hardware to the client — its own BIOS/SMBIOS tables, CPU string, MachineGuid and MAC address — so each account is seen as a distinct physical machine.': 'วิธีที่เสถียรที่สุด: รันแต่ละบัญชีในเครื่องเสมือนของตัวเอง ทุก VM แสดงฮาร์ดแวร์ที่แยกจากกันอย่างสมบูรณ์ ทั้งตาราง BIOS/SMBIOS ชื่อ CPU MachineGuid และ MAC address บัญชีแต่ละจึงถูกมองเป็นเครื่องคนละเครื่อง',
+    'Install Proxmox VE': 'ติดตั้ง Proxmox VE',
+    'Install Proxmox VE on a spare PC or mini-server (ISO from proxmox.com). Manage everything from the web UI at http://<ip>:8006 — no monitor needed after install.': 'ติดตั้ง Proxmox VE บนพีซีสำรองหรือมินิเซิร์ฟเวอร์ (ISO จาก proxmox.com) จัดการทุกอย่างผ่านเว็บที่ http://<ip>:8006 — หลังติดตั้งไม่ต้องต่อจอ',
+    'Create one Windows VM per account': 'สร้าง Windows VM หนึ่งเครื่องต่อบัญชี',
+    'Create a Windows 10/11 VM (virtio drivers, ~2 vCPU, 4 GB RAM is enough for HoN). Each VM generates its own unique machine fingerprint on first boot — that alone is already a clean HWID.': 'สร้าง VM Windows 10/11 (ไดรเวอร์ virtio, ประมาณ 2 vCPU, RAM 4 GB เพียงพอสำหรับ HoN) แต่ละ VM สร้างลายนิ้วมือของตัวเองตอนบูตครั้งแรก ซึ่งถือเป็น HWID ที่สะอาดแล้ว',
+    'Give every VM a distinct MAC': 'กำหนด MAC ที่ไม่ซ้ำให้ทุก VM',
+    'In the VM\'s Network settings set a unique macaddr per VM (e.g. B8:27:EB:00:00:01, ...:02). Without this, cloned VMs could share one adapter identity.': 'ตั้ง macaddr ที่ไม่ซ้ำกันในหน้า Network ของแต่ละ VM (เช่น B8:27:EB:00:00:01, ...:02) ถ้าไม่ตั้ง VM ที่โคลนมาอาจใช้ตัวตนการ์ดเครือข่ายร่วมกัน',
+    'Clone for more accounts': 'โคลนเพื่อเพิ่มบัญชี',
+    'Full-clone the template VM for each additional account. Every clone boots with a fresh identity; linked clones share disk but still present separate hardware to the client.': 'โคลนแบบเต็มจาก VM ต้นแบบสำหรับทุกบัญชีที่เพิ่ม แต่ละโคลนบูตด้วยตัวตนใหม่ ส่วน linked clone ใช้ดิสก์ร่วมกันแต่ยังแสดงฮาร์ดแวร์แยกให้ไคลเอนต์',
+    'Polish inside the VM': 'ปรับแต่งต่อใน VM',
+    'Run honbypass.ps1 inside the VM if you want an extra layer (fresh MachineGuid, cleared client caches). Then launch HoN Reborn and log in — the account is independent.': 'รัน honbypass.ps1 ใน VM ถ้าต้องการอีกชั้นหนึ่ง (MachineGuid ใหม่, ล้างแคชของไคลเอนต์) จากนั้นเปิด HoN Reborn และเข้าสู่ระบบ — บัญชีนี้แยกอิสระ',
+    'Recommended VM configuration': 'การตั้งค่า VM ที่แนะนำ',
+    'Tune the VM directly on the Proxmox host: nano /etc/pve/qemu-server/100.conf': 'ปรับแต่ง VM ได้โดยตรงจากไฟล์คอนฟิกบนโฮสต์ Proxmox: nano /etc/pve/qemu-server/100.conf',
+    'Passes the real CPU model through and hides the KVM hypervisor signature, so the client sees bare-metal hardware instead of a virtual machine.': 'ส่งผ่านรุ่น CPU จริงและซ่อนลายเซ็นของ KVM hypervisor ไคลเอนต์จึงเห็นฮาร์ดแวร์จริงไม่ใช่เครื่องเสมือน',
+    'Full host CPU feature set, all cores on one socket — closest match to a physical gaming PC, best in-game FPS.': 'ใช้ฟีเจอร์ CPU ของโฮสต์ครบทุกคอร์บนซ็อกเก็ตเดียว ใกล้เคียงพีซีเกมจริงที่สุด ให้ FPS ในเกมดีที่สุด',
+    'Disables memory ballooning so RAM stays fixed at 6 GB; no stutter from dynamic memory changes.': 'ปิด memory ballooning เพื่อให้ RAM คงที่ที่ 6 GB ไม่กระตุกจากการปรับหน่วยความจำอัตโนมัติ',
+    'UEFI firmware with a real EFI disk — matches how modern physical machines boot.': 'เฟิร์มแวร์ UEFI พร้อมดิสก์ EFI จริง ตรงกับวิธีบูตของเครื่องรุ่นใหม่',
+    'Give every VM its own unique MAC address on the bridge — one of the main fingerprints the client reads.': 'กำหนด MAC address ของแต่ละ VM บน bridge ให้ไม่ซ้ำกัน ซึ่งเป็นหนึ่งในลายนิ้วมือหลักที่ไคลเอนต์อ่าน',
+    'A unique SMBIOS UUID per VM completes the identity: MAC + UUID + CPU string = a separate physical machine.': 'SMBIOS UUID ที่ไม่ซ้ำต่อ VM ช่วยเติมตัวตนให้ครบ: MAC + UUID + ชื่อ CPU = เครื่องคนละเครื่อง',
+    'Enables TRIM on the ZFS SSD volume so disks stay fast even after many clones.': 'เปิด TRIM บน volumes SSD ของ ZFS เพื่อให้ดิสก์ยังเร็วแม้โคลนหลายครั้ง',
+    'Clone workflow': 'โ๨ลนเวิร์กโฟลว์',
+    'Tune one template VM, then full-clone it per account. Each clone keeps its own MAC/UUID and boots independent.': 'ปรับแต่ง VM ต้นแบบหนึ่งเครื่องแล้วโคลนแบบเต็มต่อบัญชี แต่ละโคลนมี MAC/UUID ของตัวเองและบูตอย่างอิสระ',
+    'Why Proxmox: one physical machine hosts many fully isolated environments, each with its own hardware fingerprint — no per-account registry tinkering on the host, and everything is reproducible from the template VM.': 'ทำไมต้อง Proxmox: เครื่องจริงหนึ่งเครื่องรองรับหลายสภาพแวดล้อมที่แยกจากกันอย่างสมบูรณ์ แต่ละส่วนมีลายนิ้วมือฮาร์ดแวร์ของตัวเอง ไม่ต้องแก้รีจิสตรีต่อบัญชีบนโฮสต์ และทำซ้ำได้จาก VM ต้นแบบ',
+    'HoN ACD Soon': 'HoN ACD <span class="soon">เร็ว ๆ นี้</span>',
+    'Uncap the in-game camera zoom in HoN Reborn — zoom out for a wider field of view, zoom in for detail, beyond the default limits. Coming soon.': 'ปลดล็อกการซูมกล้องในเกม HoN Reborn — ถอยออกเพื่อมุมมองที่กว้างขึ้น เข้าใกล้เพื่อดูรายละเอียด เกินขีดจำกัดเดิม เร็ว ๆ นี้',
+    'What does it actually change?': 'เปลี่ยนอะไรบ้างจริง ๆ?',
+    'Multiple accounts?': 'หลายบัญชีได้ไหม?',
+    'Need to restart the PC?': 'ต้องรีสตาร์ตเครื่องไหม?',
+    'Reversible?': 'ย้อนกลับได้ไหม?',
+    'Requirements?': 'ต้องใช้อะไรบ้าง?',
+    'It writes fresh values into MachineGuid, NT Identifier, ComputerName and InstallDate, refreshes CPU/BIOS registry caches, sets a new MAC address, and clears the HoN Reborn client caches — so the next launch sees a completely new machine.': 'เขียนค่าใหม่ลง MachineGuid, NT Identifier, ComputerName และ InstallDate รีเฟรชแคชรีจิสตรีของ CPU/BIOS ตั้ง MAC address ใหม่ และล้างแคชของไคลเอนต์ HoN Reborn — เปิดครั้งถัดไปจะเห็นเป็นเครื่องใหม่ทันที',
+    'Yes. Each run generates a new identity, so a second account also appears as an independent player on the same machine.': 'ได้ แต่ละครั้งที่รันจะสร้างตัวตนใหม่ บัญชีที่สองจึงแสดงเป็นผู้เล่นอิสระบนเครื่องเดียวกัน',
+    'No reboot needed. Just close and reopen the HoN Reborn client — caches are cleared, so the new identity is read as soon as the window opens.': 'ไม่ต้องรีสตาร์ต แค่ปิดแล้วเปิดไคลเอนต์ HoN Reborn ใหม่ แคชถูกล้างไว้แล้ว จึงอ่านตัวตนใหม่ทันทีที่หน้าต่างเปิด',
+    'Yes. Every original value is saved to hwid-backup.json on the first run. Run honbypass.ps1 restore to restore them exactly.': 'ได้ ค่าเดิมทั้งหมดถูกบันทึกใน hwid-backup.json ตั้งแต่รันครั้งแรก สั่ง honbypass.ps1 restore เพื่อคืนค่าตามเดิม',
+    'Windows 10 or 11 with PowerShell 7+ (pwsh), or Linux with pwsh. Windows PowerShell 5.1 works too. No installer, no dependencies — run pwsh -NoProfile -File honbypass.ps1.': 'Windows 10 หรือ 11 พร้อม PowerShell 7 ขึ้นไป (pwsh) หรือ Linux ที่มี pwsh Windows PowerShell 5.1 ก็ใช้ได้ ไม่มีตัวติดตั้ง ไม่ต้องพึ่งไลบรารีภายนอก สั่ง pwsh -NoProfile -File honbypass.ps1',
+    'HoN Reborn HWID Bypass 2026 — Heroes of Newerth Reborn HWID spoof utility · Windows/Linux · PowerShell 7+ (pwsh)': 'HoN Reborn HWID Bypass 2026 — เครื่องมือ HWID spoof สำหรับ Heroes of Newerth Reborn · Windows/Linux · PowerShell 7 ขึ้นไป (pwsh)'
+  };
+  var SEL = '.tb-links a, #top p, .btns .btn, summary h2, section > h2, .card h3, .card p, .step b, .step span, #proxmox p, .tablist .tab, .tabpanel p, footer .wrap';
+  function norm(s){ return s.replace(/\s+/g, ' ').trim(); }
+  function render(th){
+    var root = document.documentElement;
+    root.setAttribute('lang', th ? 'th' : 'en');
+    var nodes = document.querySelectorAll(SEL);
+    for (var i = 0; i < nodes.length; i++) {
+      var el = nodes[i];
+      // cache the original English markup once, then always translate from it
+      if (!el.getAttribute('data-en')) { el.setAttribute('data-en', el.innerHTML); }
+      var k = norm(el.getAttribute('data-en'));
+      if (th && Object.prototype.hasOwnProperty.call(TH, k)) { el.innerHTML = TH[k]; }
+      else if (!th) { el.innerHTML = el.getAttribute('data-en'); }
+    }
+    var lc = document.getElementById('lang-toggle');
+    if (lc) { lc.textContent = th ? 'EN' : 'ไทย'; }
+    var tb = document.getElementById('theme-toggle');
+    if (tb) { tb.textContent = th ? 'ธีม' : 'Theme'; }
+    var vc = document.getElementById('visitor-count');
+    if (vc) {
+      var m = vc.innerHTML.match(/<b>[\s\S]*?<\/b>/);
+      vc.innerHTML = (th ? 'ผู้เข้าชม: ' : 'Visitors: ') + (m ? m[0] : '—');
+    }
+    try { localStorage.setItem('honbypass-lang', th ? 'th' : 'en'); } catch(e){}
+  }
+  var cur = 'en';
+  try { cur = localStorage.getItem('honbypass-lang') || 'en'; } catch(e){}
+  render(cur === 'th');
+  document.getElementById('lang-toggle').addEventListener('click', function(){
+    render(document.documentElement.getAttribute('lang') !== 'th');
+  });
+})();
+
 // Theme toggle
 (function(){
   var btn = document.getElementById('theme-toggle');
