@@ -372,9 +372,19 @@ vga: std</pre>
 (function(){
   var TH = {
     'One-click HWID spoofing tool. It refreshes your machine identity so the HoN Reborn client sees you as a brand-new player.': 'เครื่องมือเปลี่ยน HWID ในคลิกเดียว รีเฟรชข้อมูลประจำเครื่องของคุณเพื่อให้ไคลเอนต์ HoN Reborn มองว่าคุณเป็นผู้เล่นคนใหม่',
+    'Heroes of Newerth Reborn HWID Bypass': 'Heroes of Newerth <span>Reborn</span> HWID Bypass',
     'Join our Discord': 'เข้าร่วม Discord ของเรา',
     'How does it work?': 'ทำงานอย่างไร?',
     'Features': 'คุณสมบัติ',
+    'Proxmox': 'Proxmox',
+    'ACD': 'ACD',
+    '-cpu host, -hypervisor, kvm=off': '-cpu host, -hypervisor, kvm=off',
+    'cpu: host + cores: 12': 'cpu: host + cores: 12',
+    'balloon: 0': 'balloon: 0',
+    'bios: ovmf': 'bios: ovmf',
+    'net0: e1000=…, bridge=vmbr0': 'net0: e1000=…, bridge=vmbr0',
+    'smbios1: uuid=…': 'smbios1: uuid=…',
+    'discard=on, ssd=1': 'discard=on, ssd=1',
     'Setup': 'การติดตั้ง',
     'FAQ': 'คำถามที่พบบ่อย',
     'Theme': 'ธีม',
@@ -433,7 +443,7 @@ vga: std</pre>
     'Windows 10 or 11 with PowerShell 7+ (pwsh), or Linux with pwsh. Windows PowerShell 5.1 works too. No installer, no dependencies — run pwsh -NoProfile -File honbypass.ps1.': 'Windows 10 หรือ 11 พร้อม PowerShell 7 ขึ้นไป (pwsh) หรือ Linux ที่มี pwsh Windows PowerShell 5.1 ก็ใช้ได้ ไม่มีตัวติดตั้ง ไม่ต้องพึ่งไลบรารีภายนอก สั่ง pwsh -NoProfile -File honbypass.ps1',
     'HoN Reborn HWID Bypass 2026 — Heroes of Newerth Reborn HWID spoof utility · Windows/Linux · PowerShell 7+ (pwsh)': 'HoN Reborn HWID Bypass 2026 — เครื่องมือ HWID spoof สำหรับ Heroes of Newerth Reborn · Windows/Linux · PowerShell 7 ขึ้นไป (pwsh)'
   };
-  var SEL = '.tb-links a, #top p, .btns .btn, summary h2, section > h2, .card h3, .card p, .step b, .step span, #proxmox p, .tablist .tab, .tabpanel p, footer .wrap';
+  var SEL = '.tb-links a, #top h1, #top p, .btns .btn, summary h2, section > h2, .card h3, .card p, .step b, .step span, #proxmox h3, #proxmox p, .tablist .tab, .tabpanel p, footer .wrap';
   function norm(s){ return s.replace(/\s+/g, ' ').trim(); }
   function render(th){
     var root = document.documentElement;
@@ -441,9 +451,12 @@ vga: std</pre>
     var nodes = document.querySelectorAll(SEL);
     for (var i = 0; i < nodes.length; i++) {
       var el = nodes[i];
-      // cache the original English markup once, then always translate from it
-      if (!el.getAttribute('data-en')) { el.setAttribute('data-en', el.innerHTML); }
-      var k = norm(el.getAttribute('data-en'));
+      // cache original markup + plain-text lookup key once, then always translate from them
+      if (!el.hasAttribute('data-en')) {
+        el.setAttribute('data-en', el.innerHTML);
+        el.setAttribute('data-key', norm(el.textContent));
+      }
+      var k = el.getAttribute('data-key');
       if (th && Object.prototype.hasOwnProperty.call(TH, k)) { el.innerHTML = TH[k]; }
       else if (!th) { el.innerHTML = el.getAttribute('data-en'); }
     }
